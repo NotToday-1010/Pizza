@@ -1,0 +1,41 @@
+.root {
+	li {
+		display: inline-flex;
+
+		a {
+			font-family: Consolas;
+			color: #fe5f1e;
+			padding: 10px;
+			border: 1px solid #fe5f1e;
+			border-radius: 30px;
+			width: 40px;
+			height: 40px;
+			justify-content: center;
+			align-self: center;
+			margin-right: 8px;
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgba(254, 95, 30, 0.8);
+				color: #fff;
+			}
+		}
+	}
+
+
+	:global {
+		.previous {
+
+		}
+
+		.selected {
+			a {
+				background-color: #fe5f1e;
+				color: #fff;
+			}
+		}
+
+	}
+
+
+}
