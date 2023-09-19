@@ -21,8 +21,7 @@ const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
             setPizzaCount(eachPizzaCount[id])
         }
     }, [])
-
-
+    
     const addPizzaInCart = () => {
         dispatch(addPizza({
             title,

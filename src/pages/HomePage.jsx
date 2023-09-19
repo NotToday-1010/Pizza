@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
 import qs from 'qs'
 import Categories from "../components/Categories";
@@ -7,29 +7,30 @@ import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import axios from "axios";
 import {setUrlProps} from "../redux/slices/filterSlice";
+import {fetchPizzas} from "../redux/slices/pizzasSlice";
 
 const HomePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isMounted = useRef(false)
     const isSearch = useRef(false)
-    const [pizzas, setPizzas] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
 
+    const status = useSelector(state => state.pizza.status)
     const page = useSelector((state) => state.filter.page)
     const selectedSort = useSelector((state) => state.filter.sort)
     const searchValue = useSelector((state) => state.search.searchQuery)
     const categoryID = useSelector(state => state.filter.categoryID)
+    const pizzas = useSelector(state => state.pizza.allPizzas)
 
-    const fetchPizzas = () => {
-        setIsLoading(true)
-        axios.get(`https://64bfe9220d8e251fd111ac24.mockapi.io/items?page=${page}&limit=4&${categoryID !== 0 ? `category=${categoryID}` : ''}&sortBy=${selectedSort.sortQuery}&order=${selectedSort.order}&search=${searchValue}`)
-            .then(res => {
-                setPizzas(res.data)
-                setIsLoading(false)
-            })
+    const loadPizzas = async () => {
+        dispatch(fetchPizzas({
+            page,
+            selectedSort,
+            searchValue,
+            categoryID
+        }))
+        window.scrollTo(0, 0)
     }
 
     useEffect(() => {
@@ -51,7 +52,7 @@ const HomePage = () => {
         window.scrollTo(0, 0)
 
         if (!isSearch.current) {
-            fetchPizzas()
+            loadPizzas().then()
         }
         isSearch.current = false
     }, [categoryID, selectedSort, searchValue, page])
@@ -77,14 +78,24 @@ const HomePage = () => {
                 <Sort/>
             </div>
             <h2 className='content__title'>Все пиццы</h2>
-            <div className='content__items'>
-                {isLoading
-                    ? [...new Array(6)].map((_, i) => <PizzaSkeleton key={i}/>)
-                    : pizzas.map((pizza) =>
-                        <PizzaBlock key={pizza.id} {...pizza}/>
-                    )
-                }
-            </div>
+            {status === 'error' ?
+                <div className="content__error-info">
+                    <h2>Произошла ошибка <icon>😕</icon></h2>
+                    <p>
+                        Не удалось получить пиццы.<br/>
+                        Попробуйте повторить попытку позже.
+                    </p>
+                </div>
+                : <div className='content__items'>
+                    {status === 'loading'
+                        ? [...new Array(6)].map((_, i) => <PizzaSkeleton key={i}/>)
+                        : pizzas.map((pizza) =>
+                            <PizzaBlock key={pizza.id} {...pizza}/>
+                        )
+                    }
+                </div>
+            }
+
             <Pagination/>
         </div>
     );
