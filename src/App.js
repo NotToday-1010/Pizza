@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import {Routes, Route} from "react-router-dom";
 import CartPage from "./pages/CartPage";
 import React from "react";
+import EmptyCart from "./pages/EmptyCart";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<HomePage/>}></Route>
                     <Route path='/cart' element={<CartPage/>}></Route>
+                    <Route path='empty-cart' element={<EmptyCart/>}></Route>
                     <Route path='*' element={<NotFoundPage/>}></Route>
                 </Routes>
             </div>

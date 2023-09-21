@@ -1,14 +1,14 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import debounce from "lodash.debounce"
-import {clear, edit} from '../../redux/slices/searchSlice'
+import {clear, edit, selectSearchSearchQuery} from '../../redux/slices/searchSlice'
 import styles from './Search.module.scss'
 import search from '../../assets/img/search.svg'
 import close from '../../assets/img/close.svg'
 
 const Search = () => {
     const [inputValue, setInputValue] = useState('')
-    const searchValue = useSelector((state) => state.search.searchQuery)
+    const searchValue = useSelector(selectSearchSearchQuery)
     const dispatch = useDispatch()
     const inputRef = useRef()
 

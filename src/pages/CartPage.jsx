@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {clearCart} from "../redux/slices/cartSlice";
+import {clearCart, selectCartPizzas, selectCartTotalCount, selectCartTotalPrice} from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 import EmptyCart from "./EmptyCart";
 
 const CartPage = () => {
-    const totalPrice = useSelector(state => state.cart.totalPrice)
-    const totalCount = useSelector(state => state.cart.totalCount)
-    const pizzas = useSelector(state => state.cart.pizzas)
+    const totalPrice = useSelector(selectCartTotalPrice)
+    const totalCount = useSelector(selectCartTotalCount)
+    const pizzas = useSelector(selectCartPizzas)
     const dispatch = useDispatch()
 
     if (totalCount === 0) {

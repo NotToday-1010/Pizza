@@ -37,12 +37,14 @@ export const pizzasSlice = createSlice({
             state.status = 'success'
             state.allPizzas = action.payload
         },
-        [fetchPizzas.rejected]: (state, action) => {
+        [fetchPizzas.rejected]: (state) => {
             state.status = 'error'
             state.allPizzas = []
         }
     }
 })
 
+export const selectPizza = (state) => state.pizza.allPizzas
+export const selectPizzaStatus = (state) => state.pizza.status
+
 export default pizzasSlice.reducer
-export const {setPizzas} = pizzasSlice.actions

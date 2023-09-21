@@ -1,11 +1,11 @@
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setSort} from '../redux/slices/filterSlice'
+import {selectFilterSort, setSort} from '../redux/slices/filterSlice'
 
 const Sort = () => {
     const [open, setOpen] = useState(false)
     const sortRef = useRef()
-    const selectedSort = useSelector((state) => state.filter.sort)
+    const selectedSort = useSelector(selectFilterSort)
     const dispatch = useDispatch()
     const list = [
         {name: 'популярности', sortQuery: 'rating', order: 'desc'},
@@ -37,6 +37,7 @@ const Sort = () => {
                 <svg
                     width='10'
                     height='6'
+
                     viewBox='0 0 10 6'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'>

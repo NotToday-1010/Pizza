@@ -77,11 +77,20 @@ const cartSlice = createSlice({
             )
             state.totalCount = state.totalCount - 1
             state.totalPrice = state.totalPrice - action.payload.price
+            if (state.totalCount === 0) {
+                state.pizzas = []
+                state.eachPizzaCount = {}
+            }
         }
     },
     name: 'cart',
     initialState
 })
+
+export const selectCartTotalPrice = (state) => state.cart.totalPrice
+export const selectCartTotalCount = (state) => state.cart.totalCount
+export const selectCartPizzas = (state) => state.cart.pizzas
+export const selectCartEachPizzaCount = (state) => state.cart.eachPizzaCount
 
 export default cartSlice.reducer
 export const {addPizza, clearCart, removePizza, addOneExistingPizza, removeOneExistingPizza} = cartSlice.actions

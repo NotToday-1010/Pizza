@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addPizza} from "../../redux/slices/cartSlice";
+import {addPizza, selectCartEachPizzaCount} from "../../redux/slices/cartSlice";
 
 const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
     const [pizzaCount, setPizzaCount] = useState(0)
-    const eachPizzaCount = useSelector(state => state.cart.eachPizzaCount)
+    const eachPizzaCount = useSelector(selectCartEachPizzaCount)
     const dispatch = useDispatch()
     const [activeType, setActiveType] = useState(types.slice(-1)[0])
     const [activeSize, setActiveSize] = useState(sizes.slice(-1)[0])
@@ -21,7 +21,7 @@ const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
             setPizzaCount(eachPizzaCount[id])
         }
     }, [])
-    
+
     const addPizzaInCart = () => {
         dispatch(addPizza({
             title,

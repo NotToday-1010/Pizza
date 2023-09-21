@@ -7,8 +7,13 @@ import PizzaSkeleton from "../components/PizzaBlock/PizzaSkeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import {setUrlProps} from "../redux/slices/filterSlice";
-import {fetchPizzas} from "../redux/slices/pizzasSlice";
+import {
+    selectFilterCategoryID,
+    selectFilterPage, selectFilterSort,
+    setUrlProps
+} from "../redux/slices/filterSlice";
+import {fetchPizzas, selectPizza, selectPizzaStatus} from "../redux/slices/pizzasSlice";
+import {selectSearchSearchQuery} from "../redux/slices/searchSlice";
 
 const HomePage = () => {
     const navigate = useNavigate()
@@ -16,12 +21,12 @@ const HomePage = () => {
     const isMounted = useRef(false)
     const isSearch = useRef(false)
 
-    const status = useSelector(state => state.pizza.status)
-    const page = useSelector((state) => state.filter.page)
-    const selectedSort = useSelector((state) => state.filter.sort)
-    const searchValue = useSelector((state) => state.search.searchQuery)
-    const categoryID = useSelector(state => state.filter.categoryID)
-    const pizzas = useSelector(state => state.pizza.allPizzas)
+    const status = useSelector(selectPizzaStatus)
+    const page = useSelector(selectFilterPage)
+    const selectedSort = useSelector(selectFilterSort)
+    const searchValue = useSelector(selectSearchSearchQuery)
+    const categoryID = useSelector(selectFilterCategoryID)
+    const pizzas = useSelector(selectPizza)
 
     const loadPizzas = async () => {
         dispatch(fetchPizzas({

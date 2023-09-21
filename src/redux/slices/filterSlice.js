@@ -35,5 +35,9 @@ export const filterSlice = createSlice({
     }
 })
 
+export const selectFilterPage = (state) => state.filter.page
+export const selectFilterCategoryID = (state) => state.filter.categoryID
+export const selectFilterSort = (state) => state.filter.sort
+
 export default filterSlice.reducer
 export const {setCategory, setSort, setPage, setUrlProps} = filterSlice.actions
