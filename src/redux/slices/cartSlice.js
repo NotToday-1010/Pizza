@@ -8,6 +8,9 @@ const initialState = {
 }
 
 const cartSlice = createSlice({
+    name: 'cart',
+    initialState,
+
     reducers: {
         addPizza(state, pizza) {
             let flag = 0
@@ -82,9 +85,7 @@ const cartSlice = createSlice({
                 state.eachPizzaCount = {}
             }
         }
-    },
-    name: 'cart',
-    initialState
+    }
 })
 
 export const selectCartTotalPrice = (state) => state.cart.totalPrice
