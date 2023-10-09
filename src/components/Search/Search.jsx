@@ -7,8 +7,8 @@ import search from '../../assets/img/search.svg'
 import close from '../../assets/img/close.svg'
 
 const Search = () => {
-    const [inputValue, setInputValue] = useState('')
     const searchValue = useSelector(selectSearchSearchQuery)
+    const [inputValue, setInputValue] = useState(searchValue)
     const dispatch = useDispatch()
     const inputRef = useRef()
 
