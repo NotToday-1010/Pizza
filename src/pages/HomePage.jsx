@@ -29,7 +29,7 @@ const HomePage = () => {
     const pizzas = useSelector(selectPizza)
 
     const loadPizzas = async () => {
-        dispatch(fetchPizzas({
+        await dispatch(fetchPizzas({
             page,
             selectedSort,
             searchValue,

@@ -3,7 +3,6 @@ import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchOnePizza, selectOnePizza, selectOnePizzaStatus} from "../redux/slices/pizzasSlice";
 import PizzaSkeletonForDescription from "../components/PizzaBlock/PizzaSkeletonForDescription";
-import {logDOM} from "@testing-library/react";
 
 const PizzaInfo = () => {
     const dispatch = useDispatch()

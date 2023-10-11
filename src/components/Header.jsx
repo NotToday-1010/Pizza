@@ -10,6 +10,7 @@ const Header = () => {
     const totalCount = useSelector(selectCartTotalCount)
     const {pathname} = useLocation()
 
+
     return (
         <div className='header'>
             <div className='container'>

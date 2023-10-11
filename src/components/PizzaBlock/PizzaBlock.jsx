@@ -41,10 +41,11 @@ const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
             <div className='pizza-block'>
                 <Link to={`/pizza/${id}`}>
                     <img
-                        className='pizza-block__image'
+                        className='pizza-block__imageMain'
                         src={imageUrl}
                         alt='Pizza'
                     />
+
                 </Link>
 
                 <h4 className='pizza-block__title'>{title}</h4>
