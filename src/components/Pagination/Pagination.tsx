@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 import ReactPaginate from "react-paginate";
 import styles from './Pagination.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilterPage, setPage} from "../../redux/slices/filterSlice";
 
-const Pagination = () => {
+const Pagination: FC = () => {
     const dispatch = useDispatch()
     const page = useSelector(selectFilterPage)
     return (

@@ -1,9 +1,18 @@
-import {useEffect, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addPizza, selectCartEachPizzaCount} from "../../redux/slices/cartSlice";
 import {Link} from "react-router-dom";
 
-const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
+type PizzaBlockProps = {
+    price: number,
+    title: string,
+    imageUrl: string,
+    sizes: number[],
+    types: number[],
+    id: string
+}
+
+const PizzaBlock: FC<PizzaBlockProps> = ({price, title, imageUrl, sizes, types, id}) => {
     const [pizzaCount, setPizzaCount] = useState(0)
     const eachPizzaCount = useSelector(selectCartEachPizzaCount)
     const dispatch = useDispatch()
@@ -19,7 +28,7 @@ const PizzaBlock = ({price, title, imageUrl, sizes, types, id}) => {
             }
         }
         if (flag) {
-            setPizzaCount(eachPizzaCount[id])
+            setPizzaCount(eachPizzaCount[Number(id)])
         }
     }, [])
 

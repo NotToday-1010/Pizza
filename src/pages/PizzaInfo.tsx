@@ -1,31 +1,36 @@
-import React, {useEffect, useRef} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {Link, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchOnePizza, selectOnePizza, selectOnePizzaStatus} from "../redux/slices/pizzasSlice";
+import {useSelector} from "react-redux";
+import {fetchOnePizza, selectOnePizza, selectOnePizzaStatus, Status} from "../redux/slices/pizzasSlice";
 import PizzaSkeletonForDescription from "../components/PizzaBlock/PizzaSkeletonForDescription";
+import {useAppDispatch} from "../redux/store";
 
-const PizzaInfo = () => {
-    const dispatch = useDispatch()
-    const {id} = useParams()
-    const status = useSelector(selectOnePizzaStatus)
+const PizzaInfo: FC = () => {
+    const dispatch = useAppDispatch()
+    const {id} = useParams<string>()
+    const status: Status = useSelector(selectOnePizzaStatus)
     const divBlock = useRef(null)
     const width = useRef(null)
 
     useEffect(() => {
-        dispatch(fetchOnePizza(id))
+        if (id) {
+            dispatch(fetchOnePizza(id))
+        }
     }, []);
 
     useEffect(() => {
-        width.current = divBlock.current.getBoundingClientRect().width
+        // @ts-ignore
+        width.current = divBlock.current?.getBoundingClientRect().width
     }, [divBlock]);
 
     const pizza = useSelector(selectOnePizza)
 
+
     return (
         <div className='container' ref={divBlock}>
-            {status === 'error' ?
+            {status === Status.ERROR ?
                 <div className="content__error-info">
-                    <h2>Произошла ошибка <icon>😕</icon></h2>
+                    <h2>Произошла ошибка 😕</h2>
                     <p>
                         Не удалось получить пиццу.<br/>
                         Попробуйте повторить попытку позже или приготовьте ее сами.
@@ -33,9 +38,10 @@ const PizzaInfo = () => {
                 </div>
                 :
                 <>
-                    {status === 'loading'
+                    {status === Status.LOADING
                         ?
-                        <PizzaSkeletonForDescription divBlock={width.current}/>
+                        // @ts-ignore
+                        <PizzaSkeletonForDescription divWidth={width.current}/>
                         :
                         <div className='pizza-block-wrapper'>
                             <div className='pizza-block' style={{width: "800px"}}>

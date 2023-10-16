@@ -5,14 +5,12 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import {Routes, Route} from "react-router-dom";
 import CartPage from "./pages/CartPage";
-import React from "react";
 import EmptyCart from "./pages/EmptyCart";
 import PizzaInfo from "./pages/PizzaInfo";
 import MainLayout from "./Layouts/MainLayout";
 
 
 function App() {
-
     return (
         <Routes>
             <Route path='/' element={<MainLayout/>}>

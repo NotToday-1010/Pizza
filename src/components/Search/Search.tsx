@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {ChangeEvent, FC, useCallback, useRef, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import debounce from "lodash.debounce"
 import {clear, edit, selectSearchSearchQuery} from '../../redux/slices/searchSlice'
@@ -6,27 +6,28 @@ import styles from './Search.module.scss'
 import search from '../../assets/img/search.svg'
 import close from '../../assets/img/close.svg'
 
-const Search = () => {
+const Search: FC = () => {
     const searchValue = useSelector(selectSearchSearchQuery)
-    const [inputValue, setInputValue] = useState(searchValue)
+    const [inputValue, setInputValue] = useState<string>(searchValue)
     const dispatch = useDispatch()
-    const inputRef = useRef()
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const onClickClear = () => {
         setInputValue('')
         dispatch(clear())
-        inputRef.current.focus()
+        inputRef.current?.focus()
     }
 
     const changeSearchQuery = useCallback(
-        debounce(val =>
-            dispatch(edit(val)), 400)
+        debounce(val => {
+            dispatch(edit(val))
+        }, 400)
         , []
     )
 
-    const changeInput = (val) => {
-        setInputValue(val)
-        changeSearchQuery(val)
+    const changeInput = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value)
+        changeSearchQuery(event.target.value)
     }
 
     return (
@@ -35,7 +36,7 @@ const Search = () => {
             <input
                 ref={inputRef}
                 value={inputValue}
-                onChange={e => changeInput(e.target.value)}
+                onChange={changeInput}
                 className={styles.input}
                 placeholder='Поиск пиццы'
             />

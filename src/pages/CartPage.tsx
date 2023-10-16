@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {clearCart, selectCartPizzas, selectCartTotalCount, selectCartTotalPrice} from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 import EmptyCart from "./EmptyCart";
 
-const CartPage = () => {
+type CartItemProps = {
+    price: number,
+    title: string,
+    type: string,
+    size: number,
+    count: number,
+    imageUrl: string,
+    id: string
+}
+
+const CartPage: FC = () => {
     const totalPrice = useSelector(selectCartTotalPrice)
     const totalCount = useSelector(selectCartTotalCount)
     const pizzas = useSelector(selectCartPizzas)
@@ -59,7 +69,7 @@ const CartPage = () => {
                                     <span>Очистить корзину</span>
                                 </div>
                             </div>
-                            {pizzas.map((item, i) =>
+                            {pizzas.map((item: CartItemProps, i: number) =>
                                 <CartItem key={i} {...item}/>
                             )}
                             <div className="cart__bottom">
