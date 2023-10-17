@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef} from 'react';
+import React, {FC, useCallback, useEffect, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
 import qs from 'qs'
 import Categories from "../components/Categories";
@@ -46,9 +46,9 @@ const HomePage: FC = () => {
     const categoryID = useSelector(selectFilterCategoryID)
     const pizzas = useSelector(selectPizza)
 
-    const onChangeCategory = (idx: number) => {
+    const onChangeCategory = useCallback((idx: number) => {
         dispatch(setCategory(idx))
-    }
+    }, [])
 
     const loadPizzas = async () => {
         dispatch(fetchPizzas({
@@ -64,7 +64,6 @@ const HomePage: FC = () => {
         const urlParams = window.location.search
         if (urlParams) {
             const params = (qs.parse(urlParams.substring(1)) as unknown) as SearchParamsType
-            console.log(params)
             dispatch(setUrlProps({
                 page: Number(params.page),
                 sort: {
