@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {selectFilterCategoryID} from "../redux/slices/filterSlice";
-import React, {FC} from "react";
+import React, {memo, FC} from "react";
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
@@ -8,7 +8,7 @@ type CategoriesProps = {
     onChangeCategory: (idx: number) => void
 }
 
-const Categories: FC<CategoriesProps> = React.memo(({onChangeCategory}) => {
+const Categories: FC<CategoriesProps> = memo(({onChangeCategory}) => {
         const categoryID = useSelector(selectFilterCategoryID)
 
         return (

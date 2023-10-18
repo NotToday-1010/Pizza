@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from "react";
+import React, {memo, FC, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilterSort, setSort} from '../redux/slices/filterSlice'
 
@@ -8,7 +8,7 @@ type SortItem = {
     order: 'desc' | 'asc'
 }
 
-const Sort: FC = React.memo(() => {
+const Sort: FC = memo(() => {
         const [open, setOpen] = useState<boolean>(false)
         const sortRef = useRef<HTMLDivElement>(null)
         const selectedSort = useSelector(selectFilterSort)
