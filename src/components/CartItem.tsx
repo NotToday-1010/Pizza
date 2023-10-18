@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {useDispatch} from "react-redux";
-import {addOneExistingPizza, removeOneExistingPizza, removePizza} from "../redux/slices/cartSlice";
+import {addOneExistingPizza, removeOneExistingPizza, removePizza} from "../redux/cart/cartSlice";
 
 type CartItemProps = {
     price: number,

@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import {selectFilterCategoryID} from "../redux/slices/filterSlice";
+import {selectFilterCategoryID} from "../redux/filter/filterSlice";
 import React, {memo, FC} from "react";
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']

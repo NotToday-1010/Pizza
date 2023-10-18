@@ -1,14 +1,20 @@
 import logoSvg from "../assets/img/pizza-logo.svg"
 import {Link, useLocation} from "react-router-dom";
 import Search from "./Search/Search";
-import React, {FC} from "react";
+import {FC} from "react";
 import {useSelector} from "react-redux";
-import {selectCartTotalCount, selectCartTotalPrice} from "../redux/slices/cartSlice";
+import {
+    selectCartTotalCount,
+    selectCartTotalPrice,
+} from "../redux/cart/cartSlice";
+import {GetPizzasFromLS} from "../hooks/GetPizzasFromLS";
 
 const Header: FC = () => {
     const totalPrice = useSelector(selectCartTotalPrice)
     const totalCount = useSelector(selectCartTotalCount)
     const {pathname} = useLocation()
+
+    GetPizzasFromLS()
 
     return (
         <div className='header'>

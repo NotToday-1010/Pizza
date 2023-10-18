@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useCallback, useRef, useState} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import debounce from "lodash.debounce"
-import {clear, edit, selectSearchSearchQuery} from '../../redux/slices/searchSlice'
+import {clear, edit, selectSearchSearchQuery} from '../../redux/search/searchSlice'
 import styles from './Search.module.scss'
 import search from '../../assets/img/search.svg'
 import close from '../../assets/img/close.svg'

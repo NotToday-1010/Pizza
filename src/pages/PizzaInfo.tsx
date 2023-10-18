@@ -1,9 +1,11 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {fetchOnePizza, selectOnePizza, selectOnePizzaStatus, Status} from "../redux/slices/pizzasSlice";
+import {selectOnePizza, selectOnePizzaStatus} from "../redux/pizzas/pizzasSlice";
 import PizzaSkeletonForDescription from "../components/PizzaBlock/PizzaSkeletonForDescription";
 import {useAppDispatch} from "../redux/store";
+import {Status} from "../redux/pizzas/pizzasTypes";
+import {fetchOnePizza} from "../redux/pizzas/asyncActions";
 
 const PizzaInfo: FC = () => {
     const dispatch = useAppDispatch()

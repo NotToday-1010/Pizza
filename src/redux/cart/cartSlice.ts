@@ -1,31 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from '../store'
+import {ActionCartItemType, CartItem, CartSliceState} from "./cartTypes";
 
-type CartItem = {
-    title: string,
-    type: string,
-    size: number,
-    price: number,
-    id: string,
-    imageUrl: string,
-    count: number
-}
-
-type ActionCartItemType = {
-    id: string,
-    type: string,
-    size: number,
-    price: number,
-    count: number
-}
-
-interface CartSliceState {
-    totalPrice: number,
-    pizzas: CartItem[],
-    eachPizzaCount: Record<number, number>,
-    // eachPizzaCount: { [key: number]: number }
-    totalCount: number,
-}
 
 const initialState: CartSliceState = {
     totalPrice: 0,
@@ -39,24 +15,30 @@ const cartSlice = createSlice({
     initialState,
 
     reducers: {
+        setCartState: (state, action: PayloadAction<CartSliceState>) => {
+            state.totalPrice = Number(action.payload.totalPrice)
+            state.pizzas = action.payload.pizzas
+            state.eachPizzaCount = action.payload.eachPizzaCount
+            state.totalCount = Number(action.payload.totalCount)
+        },
         addPizza(state, pizza: PayloadAction<CartItem>) {
             let flag = 0
             let isMutated = 0
             state.totalPrice = state.totalPrice + pizza.payload.price
             state.totalCount = state.totalCount + 1
             for (let pizzaId in state.eachPizzaCount) {
-                if (Number(pizza.payload.id) === Number(pizzaId)) {
+                if (pizza.payload.id === pizzaId) {
                     flag = 1
                 }
             }
             if (!flag) {
-                state.eachPizzaCount[Number(pizza.payload.id)] = 1
+                state.eachPizzaCount[pizza.payload.id] = 1
                 state.pizzas = [...state.pizzas, pizza.payload]
                 isMutated = 1
             }
 
             if (flag) {
-                state.eachPizzaCount[Number(pizza.payload.id)] = state.eachPizzaCount[Number(pizza.payload.id)] + 1
+                state.eachPizzaCount[pizza.payload.id] = state.eachPizzaCount[pizza.payload.id] + 1
                 state.pizzas.every((obj1, ind) => {
                         if ((obj1.id === pizza.payload.id) && (obj1.type === pizza.payload.type) && (obj1.size === pizza.payload.size)) {
                             state.pizzas[ind].count = state.pizzas[ind].count + 1
@@ -71,7 +53,7 @@ const cartSlice = createSlice({
             }
         },
         removePizza(state, action: PayloadAction<ActionCartItemType>) {
-            state.eachPizzaCount[Number(action.payload.id)] = state.eachPizzaCount[Number(action.payload.id)] - action.payload.count
+            state.eachPizzaCount[action.payload.id] = state.eachPizzaCount[action.payload.id] - action.payload.count
             state.pizzas = state.pizzas.filter(obj => (obj.id !== action.payload.id) || (obj.type !== action.payload.type) || (obj.size !== action.payload.size))
             state.totalCount = state.totalCount - action.payload.count
             state.totalPrice = state.totalPrice - action.payload.price * action.payload.count
@@ -86,7 +68,7 @@ const cartSlice = createSlice({
             state.pizzas.every((obj: CartItem, ind: number) => {
                     if ((obj.id === action.payload.id) && (obj.type === action.payload.type) && (obj.size === action.payload.size)) {
                         state.pizzas[ind].count = state.pizzas[ind].count + 1
-                        state.eachPizzaCount[Number(obj.id)] = state.eachPizzaCount[Number(obj.id)] + 1
+                        state.eachPizzaCount[obj.id] = state.eachPizzaCount[obj.id] + 1
                         return false
                     }
                     return true
@@ -99,7 +81,7 @@ const cartSlice = createSlice({
             state.pizzas.every((obj, ind) => {
                     if ((obj.id === action.payload.id) && (obj.type === action.payload.type) && (obj.size === action.payload.size)) {
                         state.pizzas[ind].count = state.pizzas[ind].count - 1
-                        state.eachPizzaCount[Number(obj.id)] = state.eachPizzaCount[Number(obj.id)] - 1
+                        state.eachPizzaCount[obj.id] = state.eachPizzaCount[obj.id] - 1
                         return false
                     }
                     return true
@@ -119,6 +101,14 @@ export const selectCartTotalPrice = (state: RootState) => state.cart.totalPrice
 export const selectCartTotalCount = (state: RootState) => state.cart.totalCount
 export const selectCartPizzas = (state: RootState) => state.cart.pizzas
 export const selectCartEachPizzaCount = (state: RootState) => state.cart.eachPizzaCount
+export const selectCartState = (state: RootState) => state.cart
 
 export default cartSlice.reducer
-export const {addPizza, clearCart, removePizza, addOneExistingPizza, removeOneExistingPizza} = cartSlice.actions
+export const {
+    setCartState,
+    addPizza,
+    clearCart,
+    removePizza,
+    addOneExistingPizza,
+    removeOneExistingPizza
+} = cartSlice.actions

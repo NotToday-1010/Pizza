@@ -1,6 +1,6 @@
 import React, {memo, FC, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilterSort, setSort} from '../redux/slices/filterSlice'
+import {selectFilterSort, setSort} from '../redux/filter/filterSlice'
 
 type SortItem = {
     name: 'популярности' | 'цене' | 'алфавиту',

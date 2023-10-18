@@ -11,10 +11,12 @@ import {
     selectFilterCategoryID,
     selectFilterPage, selectFilterSort, setCategory,
     setUrlProps
-} from "../redux/slices/filterSlice";
-import {fetchPizzas, selectPizza, selectPizzaStatus, Status} from "../redux/slices/pizzasSlice";
-import {selectSearchSearchQuery} from "../redux/slices/searchSlice";
+} from "../redux/filter/filterSlice";
+import {selectPizza, selectPizzaStatus} from "../redux/pizzas/pizzasSlice";
+import {selectSearchSearchQuery} from "../redux/search/searchSlice";
 import {useAppDispatch} from "../redux/store";
+import {Status} from "../redux/pizzas/pizzasTypes";
+import {fetchPizzas} from "../redux/pizzas/asyncActions";
 
 type SearchParamsType = {
     categoryID: string,
