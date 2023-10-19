@@ -2,8 +2,11 @@ import {FC, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addPizza, selectCartEachPizzaCount} from "../../redux/cart/cartSlice";
 import {Link} from "react-router-dom";
+import favoriteSvg from "../../assets/img/favorite.svg";
+import AddedFavoriteSvg from "../../assets/img/AddedFavorite.svg";
+import {addOneFavorite, removeOneFavorite, selectFavoriteID} from "../../redux/favorite/favoriteSlice";
 
-type PizzaBlockProps = {
+export type PizzaBlockProps = {
     price: number,
     title: string,
     imageUrl: string,
@@ -15,6 +18,7 @@ type PizzaBlockProps = {
 const PizzaBlock: FC<PizzaBlockProps> = ({price, title, imageUrl, sizes, types, id}) => {
     const [pizzaCount, setPizzaCount] = useState(0)
     const eachPizzaCount = useSelector(selectCartEachPizzaCount)
+    const favoritesId = useSelector(selectFavoriteID)
     const dispatch = useDispatch()
     const [activeType, setActiveType] = useState(types.slice(-1)[0])
     const [activeSize, setActiveSize] = useState(sizes.slice(-1)[0])
@@ -45,6 +49,14 @@ const PizzaBlock: FC<PizzaBlockProps> = ({price, title, imageUrl, sizes, types, 
         setPizzaCount(prevState => prevState + 1)
     }
 
+    const addPizzaInFavorite = (id: string) => {
+        dispatch(addOneFavorite(id))
+    }
+
+    const removePizzaInFavorite = (id: string) => {
+        dispatch(removeOneFavorite(id))
+    }
+
     return (
         <div className='pizza-block-wrapper'>
             <div className='pizza-block'>
@@ -57,7 +69,18 @@ const PizzaBlock: FC<PizzaBlockProps> = ({price, title, imageUrl, sizes, types, 
 
                 </Link>
 
-                <h4 className='pizza-block__title'>{title}</h4>
+                <h4 className='pizza-block__title'>
+                    {title}
+                    {favoritesId.includes(id) ?
+                        <span onClick={() => removePizzaInFavorite(id)}>
+                                    <img width='38' src={AddedFavoriteSvg} alt='favorite image'/>
+                                 </span>
+                        :
+                        <span onClick={() => addPizzaInFavorite(id)}>
+                                    <img width='38' src={favoriteSvg} alt='favorite image'/>
+                                </span>
+                    }
+                </h4>
                 <div className='pizza-block__selector'>
                     <ul>
                         {types.map(typeID =>

@@ -4,6 +4,7 @@ import filterSlice from "./filter/filterSlice";
 import cartSlice from "./cart/cartSlice";
 import pizzasSlice from "./pizzas/pizzasSlice";
 import {useDispatch} from "react-redux";
+import favoriteSlice from "./favorite/favoriteSlice";
 
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
         cart: cartSlice,
         search: searchReducer,
         filter: filterSlice,
-        pizza: pizzasSlice
+        pizza: pizzasSlice,
+        favorite: favoriteSlice
     },
 })
 

@@ -99,7 +99,6 @@ const HomePage: FC = () => {
         }
         isMounted.current = true
     }, [categoryID, selectedSort, page])
-
     return (
         <div className='container'>
             <div className='content__top'>
@@ -124,7 +123,6 @@ const HomePage: FC = () => {
                     }
                 </div>
             }
-
             <Pagination/>
         </div>
     );
